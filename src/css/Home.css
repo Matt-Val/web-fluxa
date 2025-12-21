@@ -1,0 +1,187 @@
+:root {
+  --primary-black: #111111;
+    --text-gray: #555555;
+    --border-light: #eaeaea;
+    --bg-white: #ffffff;
+    --font-family: 'Inter', -apple-system, system-ui, sans-serif;
+}
+
+.fluxa-page {
+  font-family: var(--font-family);
+  background-color: var(--bg-white);
+  color: var(--primary-black);
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+/*  Hero Section  */
+.hero-badge {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--primary-black);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.hero-title {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--primary-black);
+  max-width: 750px;
+  margin: 0 auto 30px;
+  font-weight: 400;
+}
+
+.btn-black {
+  background-color: var(--primary-black);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.2s ease;
+}
+
+.btn-black:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* (useState + useEffect) */
+.engine-status {
+  margin: 30px auto;
+  font-size: 16px;
+  color: var(--primary-black);
+  font-weight: 600;
+  min-height: 20px;
+  max-width: 600px;
+}
+
+/* Features Grid (3 Cards) */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 60px 0;
+}
+
+.feature-card {
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 40px 30px;
+  text-align: left;
+  transition: border-color 0.3s ease;
+}
+
+.feature-card:hover {
+  border-color: var(--primary-black);
+}
+
+.icon-box {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.feature-card p {
+  font-size: 15px;
+  color: var(--text-gray);
+  line-height: 1.5;
+}
+
+/* Panel de tipos */
+.projects-panel {
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 60px 40px;
+  margin-bottom: 80px;
+}
+
+.projects-panel h2 {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.project-item {
+  display: flex;
+  gap: 16px;
+  cursor: pointer;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.project-item:hover {
+  background-color: #fafafa;
+  border-color: var(--primary-black);
+  transform: translateY(-2px);
+}
+
+.project-info h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.project-info p {
+  font-size: 14px;
+  color: var(--text-gray);
+  line-height: 1.5;
+}
+
+/* Final CTA */
+.cta-section {
+  padding-bottom: 40px;
+}
+
+.cta-section h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.cta-section p {
+  font-size: 16px;
+  color: var(--text-gray);
+  max-width: 500px;
+  margin: 0 auto 30px;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .features-grid, .projects-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+}
