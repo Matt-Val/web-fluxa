@@ -3,33 +3,8 @@ import '../css/Home.css';
 
 const Home = () => { 
     
-    // Estados
+    // Estado
     const [ selected, setSelected ] = useState(null); // Guarda la opcion seleccionada. - setSelected es para actualizar.
-    const [ analysisText, setAnalysisText ] = useState(""); // Guarda el texto de analisis generado. - setAnalysisText es para actualizar.
-
-    const analysisMessages = {
-        ecommerce: " Necesitas pasarelas de pago, gestión de stock y seguridad avanzada. ",
-        landing: " Necesitas un diseño atractivo, optimización SEO y formularios de contacto. ",
-        blog: " Necesitas un sistema de gestión de contenidos, diseño responsivo y optimización de lectura dinámica. ",
-        corporate: " Necesitas roles de usuario, arquitectura escalable y panel administrativo privado. "
-    };
-
-    useEffect( () => { 
-
-        if(!selected) return; // Si no hay seleccion, no hacer nada.
-
-        let i = 0; // Contador de caracteres
-        setAnalysisText(""); // Eliminar el texto anterior
-        const fullMessage = analysisMessages[selected]; // Mensaje completo a mostrar
-
-        const typingInterval = setInterval( () => { 
-            setAnalysisText( (prev) => prev + fullMessage.charAt(i)); // Agrega las letras letra x letra.
-            i++; // Siguiente letra.
-            if( i >= fullMessage.length ) clearInterval(typingInterval); // Detener cuando termina el msj.
-        }, 20); // Cada 20ms.
-
-        return () => clearInterval(typingInterval); // Limpiar intervaloa al desmontar.
-    }, [selected] ); // Se ejecuta cuando 'selected' cambia.
 
     return ( 
         <div className="fluxa-page">
@@ -44,13 +19,7 @@ const Home = () => {
                 </button>
             </header>
 
-            {/* Output del Sistema */}
-            <div className="engine-status">
-                {analysisText && `⚡ ${analysisText}`}
-            </div>
-
             <section className="features-grid">
-
                 <div className="feature-card">
                     <div className="icon-box">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
