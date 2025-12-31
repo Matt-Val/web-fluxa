@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../css/Home.css';
 
 const Home = () => { 
@@ -13,10 +14,14 @@ const Home = () => {
                 <h1 className="hero-title">
                     Solicita tu proyecto web de forma inteligente. Nuestro sistema entiende tus necesidades antes de que hablemos, para ofrecerle la mejor propuesta personalizada.
                 </h1>
-                <button className="btn-black">
+
+                <Link to="/solicitud" className="btn-black" style={{ textDecoration: 'none' }}>
                     Comenzar solicitud
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-                </button>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginLeft: '10px'}}>
+                        <path d="M5 12h14m-7-7 7 7-7 7"/>
+                    </svg>
+                </Link>
+                
             </header>
 
             <section className="features-grid">
@@ -76,7 +81,9 @@ const Home = () => {
             <footer className="cta-section">
                 <h3>¿Listo para comenzar?</h3>
                 <p>Nuestro formulario inteligente se adapta a tus respuestas para entender lo que necesitas.</p>
-                <button className="btn-black">Iniciar mi solicitud</button>
+                <button className="btn-black">Iniciar mi solicitud
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+                </button>
             </footer>
         </div>
     );
@@ -85,6 +92,7 @@ const Home = () => {
 // SubComponente para las opciones del checkMark SVG
 const ProyectOption = ( { title, desc, onClick}) => {
     return (
+        // Cada opcion del proyecto.
         <div className="project-item" onClick={onClick}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{marginTop: '2px'}}><path d="M20 6L9 17l-5-5"/></svg>
             <div className="project-info">
