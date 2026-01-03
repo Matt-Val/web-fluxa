@@ -21,17 +21,17 @@ const Solicitud = () => {
 
             <div className="stepper">
                 <div className={`step ${step >= 1 ? 'active' : ''}`}><span>1</span><label>Tipo</label></div>
-
-                <div className="step-line"></div>
-
+                    
+                <div className={`step-line ${step >= 2 ? 'active' : ''}`}></div>
+                    
                 <div className={`step ${step >= 2 ? 'active' : ''}`}><span>2</span><label>Alcance</label></div>
-
-                <div className="step-line"></div>
-
+                    
+                <div className={`step-line ${step >= 3 ? 'active' : ''}`}></div>
+                    
                 <div className={`step ${step >= 3 ? 'active' : ''}`}><span>3</span><label>Presupuesto</label></div>
-
-                <div className="step-line"></div>
-
+                    
+                <div className={`step-line ${step >= 4 ? 'active' : ''}`}></div>
+                    
                 <div className={`step ${step >= 4 ? 'active' : ''}`}><span>4</span><label>Resumen</label></div>
             </div>
 
