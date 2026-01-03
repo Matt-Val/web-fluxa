@@ -21,7 +21,7 @@ const Home = () => {
                         <path d="M5 12h14m-7-7 7 7-7 7"/>
                     </svg>
                 </Link>
-                
+
             </header>
 
             <section className="features-grid">
@@ -81,9 +81,14 @@ const Home = () => {
             <footer className="cta-section">
                 <h3>¿Listo para comenzar?</h3>
                 <p>Nuestro formulario inteligente se adapta a tus respuestas para entender lo que necesitas.</p>
-                <button className="btn-black">Iniciar mi solicitud
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-                </button>
+                
+                
+                <Link to="/solicitud" className="btn-black" style={{ textDecoration: 'none' }}>
+                    Comenzar solicitud
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginLeft: '10px'}}>
+                        <path d="M5 12h14m-7-7 7 7-7 7"/>
+                    </svg>
+                </Link>
             </footer>
         </div>
     );
