@@ -89,9 +89,6 @@ export const PreguntasLanding = ( { onChange, valores } ) => {
                     ))}
                 </div>
             </div>
-
-
-
         </div>
-    )
-}
+    );
+};
