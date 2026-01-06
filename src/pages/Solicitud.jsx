@@ -4,13 +4,22 @@ import '../css/Solicitud.css';
 
 const Solicitud = () => { 
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState( {tipo : '' } );
+    const [formData, setFormData] = useState( {
+        tipo : '' ,
+        presupuesto: '' 
+    } );
+
     const navigate = useNavigate();
 
     const seleccionarTipo = (tipo) => { 
         setFormData( { ...formData, tipo } );
         setStep(2); // Que avance al siguiente paso
     };
+
+    const seleccionarPresupuesto = (rango) => { 
+        setFormData({ ...formData, presupuesto: rango});
+        setStep(4);
+    }
 
     return (
         <div className="fluxa-page form-view">
