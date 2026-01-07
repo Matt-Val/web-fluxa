@@ -31,7 +31,7 @@ export const PreguntasLanding = ( { onChange, valores } ) => {
                         'FAQ', 
                         'Integración con redes sociales'
                     ].map(seccion => ( 
-                        <label key={seccion} className="'seleccion-item">
+                        <label key={seccion} className="seleccion-item">
                             <input 
                                 type="checkbox"
                                 checked={(valores.secciones || []).includes(seccion)}

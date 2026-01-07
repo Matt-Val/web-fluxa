@@ -1,3 +1,4 @@
+/* src/css/Solicitud.css */
 
 .form-view { 
     text-align: center;
@@ -13,7 +14,7 @@
     margin-bottom: 10px;
 }
 
-/* Stepper, circulos y lineas */
+/* Stepper, círculos y líneas */
 .stepper { 
     display: flex;
     justify-content: center;
@@ -66,23 +67,19 @@
     background: #111;
 }
 
-.form-card:hover .form-icon-box { 
-    background: #111;
-    color: #fff;
-}
-/* Grid de las opciones */
+/* --- GRID DE OPCIONES (DISTRIBUCIÓN 2 y 2) --- */
 .form-grid { 
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr); /* Volvemos a las 2 columnas */
     gap: 20px;
-    max-width: 850px;
+    max-width: 850px; /* Aumentamos el ancho para que quepan bien las dos columnas */
     margin: 0 auto;
 }
 
 .form-card { 
     display: flex;
     align-items: center;
-    padding: 24px;
+    padding: 20px 24px;
     border: 1px solid #eee;
     border-radius: 12px;
     cursor: pointer;
@@ -94,9 +91,10 @@
 .form-card:hover { 
     border-color: #111;
     box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    background-color: #fcfcfc;
 }
 
-/* Contenedor del Icono */
+/* Contenedor del Icono y Efecto Hover */
 .form-icon-box { 
     width: 52px;
     height: 52px;
@@ -105,12 +103,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 24px;
     margin-right: 18px;
     transition: all 0.2s ease;
+    color: #111;
+    flex-shrink: 0; /* Evita que el icono se deforme si hay mucho texto */
 }
 
-/* Efecto Hover - Al pasar el Mouse */
 .form-card:hover .form-icon-box { 
     background: #111;
     color: #fff;
@@ -124,11 +123,58 @@
 
 .form-card-info p { 
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
     line-height: 1.4;
 }
 
+/* --- ESTILOS PARA EL PASO 2 (Componentes de preguntas) --- */
+.preguntas-contenedor {
+    text-align: left;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.pregunta-bloque {
+    margin-bottom: 30px;
+}
+
+.pregunta-bloque h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.opciones-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.opciones-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.seleccion-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 15px;
+}
+
+.seleccion-item:hover {
+    border-color: #111;
+    background: #f9f9f9;
+}
+
+/* --- BOTONES Y OTROS --- */
 .step-subtitle { 
     margin-bottom: 30px;
     color: #666;
@@ -146,4 +192,19 @@
 
 .btn-secondary:hover { 
     background: #f9f9f9;
+}
+
+.btn-black {
+    background-color: #111;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+.btn-black:hover {
+    transform: translateY(-2px);
 }

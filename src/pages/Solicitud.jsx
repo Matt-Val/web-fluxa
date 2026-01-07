@@ -2,22 +2,40 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Solicitud.css';
 
+import { PreguntasEcommerce } from '../components/PreguntasEcommerce';
+import { PreguntasLanding } from '../components/PreguntasLanding';
+import { PreguntasBlog } from '../components/PreguntasBlogs';
+import { PreguntasCorporate } from '../components/PreguntasCorporate';
+
 const Solicitud = () => { 
+
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState( {
-        tipo : '' ,
-        presupuesto: '' 
-    } );
+
+    // Agregamos los detalles para guardar las respuestas del paso 2
+    const [formData, setFormData] = useState({
+        tipo: '',
+        detalles: {},
+        presupuesto: ''
+    });
 
     const navigate = useNavigate();
 
+    // Al seleccionar el tipo, reiniciamos detalles por si el usuario vuelve hacia atras y cambia de opcion
     const seleccionarTipo = (tipo) => { 
-        setFormData( { ...formData, tipo } );
-        setStep(2); // Que avance al siguiente paso
+        setFormData( { ...formData, tipo, detalles: {} } );
+        setStep(2);
+    }
+
+    // Funcion para pasar los componentes (onChange ) y capturar los datos
+    const handleDetalles = (campo, valor) => { 
+        setFormData(prev => ({ 
+            ...prev,
+            detalles: { ...prev.detalles, [campo]: valor }
+        }));
     };
 
     const seleccionarPresupuesto = (rango) => { 
-        setFormData({ ...formData, presupuesto: rango});
+        setFormData({ ...formData, presupuesto: rango } );
         setStep(4);
     }
 
@@ -80,10 +98,29 @@ const Solicitud = () => {
                 )}
 
                 { step === 2 && ( 
-                    <div>
-                        <h3>Paso 2: Alcance </h3>
-                        <p>Has seleccionado: {formData.tipo}</p>
-                        <button className="btn-black" onClick={() => setStep(1) }> Volver </button>
+                    <div className="step-container">
+                        {/* Renderizado condicional basado en el tipo seleccionado */}
+
+                        {formData.tipo === 'ecommerce' && ( 
+                            <PreguntasEcommerce onChange ={handleDetalles} valores={formData.detalles} />
+                        )}
+
+                        {formData.tipo === 'landing' && ( 
+                            <PreguntasLanding onChange = {handleDetalles} valores={formData.detalles} />
+                        )}
+
+                        {formData.tipo === 'blog' && ( 
+                            <PreguntasBlog onChange = {handleDetalles} valores={formData.detalles} />
+                        )}
+
+                        {formData.tipo === 'corporate' && ( 
+                            <PreguntasCorporate onChange = {handleDetalles} valores={formData.detalles} />
+                        )}
+
+                        <div className="btn-group" style={{marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '20px' }}>
+                            <button className="btn-secondary" onClick={() => setStep(1)}>Atrás</button>
+                            <button className="btn-black" onClick={() => setStep(3)}>Continuar</button>
+                        </div>
                     </div>
                 )}
             </section>
