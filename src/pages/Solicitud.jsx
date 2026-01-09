@@ -101,6 +101,9 @@ const Solicitud = () => {
                     <div className="step-container">
                         {/* Renderizado condicional basado en el tipo seleccionado */}
 
+                        <h3>Paso 2: Alcance</h3>
+                        <p>Has seleccionado: {formData.tipo}</p>
+
                         {formData.tipo === 'ecommerce' && ( 
                             <PreguntasEcommerce onChange ={handleDetalles} valores={formData.detalles} />
                         )}
@@ -117,15 +120,17 @@ const Solicitud = () => {
                             <PreguntasCorporate onChange = {handleDetalles} valores={formData.detalles} />
                         )}
 
-                        <div className="btn-group" style={{marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '20px' }}>
+                        <div className="btn-group">
                             <button className="btn-secondary" onClick={() => setStep(1)}>Atrás</button>
+
                             <button className="btn-black" onClick={() => setStep(3)}>Continuar</button>
                         </div>
                     </div>
                 )}
             </section>
-
-            <button className="btn-secondary" onClick={() => navigate('/') } >
+            
+            
+            <button className="btn-secondary" style={{ marginTop: '60px' }} onClick={() => navigate('/')} >
                 Volver al inicio
             </button>
         </div>

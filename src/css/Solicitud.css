@@ -1,4 +1,3 @@
-/* src/css/Solicitud.css */
 
 .form-view { 
     text-align: center;
@@ -14,7 +13,7 @@
     margin-bottom: 10px;
 }
 
-/* Stepper, círculos y líneas */
+/* Stepper, circulos y lineas */
 .stepper { 
     display: flex;
     justify-content: center;
@@ -67,19 +66,23 @@
     background: #111;
 }
 
-/* --- GRID DE OPCIONES (DISTRIBUCIÓN 2 y 2) --- */
+.form-card:hover .form-icon-box { 
+    background: #111;
+    color: #fff;
+}
+/* Grid de las opciones */
 .form-grid { 
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Volvemos a las 2 columnas */
+    grid-template-columns: repeat(2,1fr);
     gap: 20px;
-    max-width: 850px; /* Aumentamos el ancho para que quepan bien las dos columnas */
+    max-width: 850px;
     margin: 0 auto;
 }
 
 .form-card { 
     display: flex;
     align-items: center;
-    padding: 20px 24px;
+    padding: 24px;
     border: 1px solid #eee;
     border-radius: 12px;
     cursor: pointer;
@@ -91,10 +94,9 @@
 .form-card:hover { 
     border-color: #111;
     box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-    background-color: #fcfcfc;
 }
 
-/* Contenedor del Icono y Efecto Hover */
+/* Contenedor del Icono */
 .form-icon-box { 
     width: 52px;
     height: 52px;
@@ -103,13 +105,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 22px;
     margin-right: 18px;
     transition: all 0.2s ease;
-    color: #111;
-    flex-shrink: 0; /* Evita que el icono se deforme si hay mucho texto */
 }
 
+/* Efecto Hover - Al pasar el Mouse */
 .form-card:hover .form-icon-box { 
     background: #111;
     color: #fff;
@@ -123,15 +124,64 @@
 
 .form-card-info p { 
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     color: #666;
     line-height: 1.4;
 }
 
-/* --- ESTILOS PARA EL PASO 2 (Componentes de preguntas) --- */
+.step-subtitle { 
+    margin-bottom: 30px;
+    color: #666;
+}
+
+/* --- Contenedor de botones --- */
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espacio entre botones */
+    margin-top: 40px;
+}
+
+/* --- Botón Negro (Principal) --- */
+.btn-black {
+    background-color: #111;
+    color: #fff;
+    border: 1px solid #111;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-black:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+/* --- Botón Secundario (Bordeado) --- */
+.btn-secondary {
+    background: none;
+    border: 1px solid #ddd;
+    color: #111;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: #f9f9f9;
+    border-color: #111;
+}
+
+/* --- Estilos para los componentes de preguntas --- */
 .preguntas-contenedor {
-    text-align: left;
-    max-width: 700px;
+    text-align: left; /* Alinea los títulos y labels a la izquierda */
+    max-width: 600px;
     margin: 0 auto;
 }
 
@@ -139,21 +189,9 @@
     margin-bottom: 30px;
 }
 
-.pregunta-bloque h4 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
-.opciones-columna {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
 .opciones-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr); /* Crea las dos columnas */
     gap: 12px;
 }
 
@@ -166,45 +204,9 @@
     border-radius: 8px;
     cursor: pointer;
     transition: 0.2s ease;
-    font-size: 15px;
 }
 
 .seleccion-item:hover {
     border-color: #111;
     background: #f9f9f9;
-}
-
-/* --- BOTONES Y OTROS --- */
-.step-subtitle { 
-    margin-bottom: 30px;
-    color: #666;
-}
-
-.btn-secondary { 
-    margin-top: 40px;
-    background: none;
-    border: 1px solid #ccc;
-    padding: 10px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.btn-secondary:hover { 
-    background: #f9f9f9;
-}
-
-.btn-black {
-    background-color: #111;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: transform 0.2s ease;
-}
-
-.btn-black:hover {
-    transform: translateY(-2px);
 }
