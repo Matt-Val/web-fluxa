@@ -16,16 +16,19 @@ const Solicitud = () => {
     const [formData, setFormData] = useState({
         tipo: '',
         detalles: {},
-        presupuesto: ''
+        presupuesto: '',
+        contacto: { nombre: '', email: '', telefono: ''}
     });
 
     const navigate = useNavigate();
-
-    // Al seleccionar el tipo, reiniciamos detalles por si el usuario vuelve hacia atras y cambia de opcion
-    const seleccionarTipo = (tipo) => { 
+    
+    const handleSeleccionarTipo = (tipo) => { 
         setFormData( { ...formData, tipo, detalles: {} } );
-        setStep(2);
-    }
+    };
+
+    const handleSeleccionarPresupuesto = (rango) => { 
+        setFormData({ ...formData, presupuesto: rango } );
+    };
 
     // Fun para capturar las respuestas del paso 2
     const handleDetalles = (campo, valor) => { 
@@ -35,10 +38,29 @@ const Solicitud = () => {
         }));
     };
 
-    const seleccionarPresupuesto = (rango) => { 
-        setFormData({ ...formData, presupuesto: rango } );
-        setStep(4);
-    }
+    const handleContacto = (e) => { 
+        const { name, value } = e.target;
+        setFormData(prev => ({ 
+            ...prev,
+            contacto: { ...prev.contacto, [name]: value }
+        }));
+    };
+
+    const esContactoValido = () => { 
+        const { nombre, email, telefono } = formData.contacto;
+
+        // Regla 1: Que los campos esten llenos
+        const noEstanVacios = nombre.trim() !== '' && email.trim() !== '' && telefono.trim() !== '';
+
+        // Regla 2: Que el Email contenga un @
+        const emailValido = email.includes('@');
+
+        // Regla 3: Que el telefono tenga exactamente 12 digitos 
+        const telefonoValido = telefono.length === 12;
+
+        return noEstanVacios && emailValido && telefonoValido;
+    };
+
 
     return (
         <div className="fluxa-page form-view">
@@ -65,42 +87,58 @@ const Solicitud = () => {
             </div>
 
             <section className="form-step-content">
+
+                {/* Paso 1: Selección de Tipo */}
                 { step === 1 && (
                     <>
                         <h3>¿Qué necesitas?</h3>
+                        <p className="step-subtitle">Selecciona una opción para continuar.</p>
+
                         <div className="form-grid">
                             <FormCard 
                                 icon="🛒"
                                 title="E-commerce" 
                                 desc="Tienda online con carrito, pagos y gestión de productos." 
-                                onClick={() => seleccionarTipo('ecommerce')} 
+                                isSelected={formData.tipo === 'ecommerce'}
+                                onClick={() => handleSeleccionarTipo('ecommerce')} 
                             />
                             <FormCard 
                                 icon="📄"
                                 title="Landing Page" 
                                 desc="Página de aterrizaje para campañas o presentación de servicios." 
-                                onClick={() => seleccionarTipo('landing')} 
+                                isSelected={formData.tipo === 'landing'}
+                                onClick={() => handleSeleccionarTipo('landing')} 
                             />
                             <FormCard 
                                 icon="📖"
                                 title="Blog" 
                                 desc="Sitio web con sistema de publicaciones y contenido editorial." 
-                                onClick={() => seleccionarTipo('blog')} 
+                                isSelected={formData.tipo === 'blog'}
+                                onClick={() => handleSeleccionarTipo('blog')} 
                             />
                             <FormCard 
                                 icon="🏢"
                                 title="Sistema Corporativo" 
                                 desc="Aplicación web empresarial con funcionalidades específicas para tu negocio." 
-                                onClick={() => seleccionarTipo('corporate')} 
+                                isSelected={formData.tipo === 'corporate'}
+                                onClick={() => handleSeleccionarTipo('corporate')} 
                             />
+                        </div>
+
+                        <div className="btn-group">
+                            <button 
+                                className="btn-black"
+                                disabled={!formData.tipo} // Bloqueado hasta que elija algo
+                                onClick={() => setStep(2)}
+                            >
+                                Continuar
+                            </button>
                         </div>
                     </>
                 )}
 
                 { step === 2 && ( 
                     <div className="step-container">
-                        {/* Renderizado condicional basado en el tipo seleccionado */}
-
 
                         {formData.tipo === 'ecommerce' && <PreguntasEcommerce onChange = {handleDetalles} valores = {formData.detalles} /> }
 
@@ -119,38 +157,106 @@ const Solicitud = () => {
 
                 {step === 3 && ( 
                     <div className="step-container">
-                        <h3>¿Cuál es tu presupuesto estimado?</h3>
-                        <p className="step-subtitle">Selecciona el rango que mejor se adapte a tu inversión</p>
+                        <h3>¿Qué alcance tiene tu inversión?</h3>
 
                         {/* Usamos el mismo grid para mantener la simetria */}
                         <div className="form-grid">
                             <FormCard
                                 icon="🌱"
                                 title="Esencial"
-                                desc="Desde los $400.000 CLP"
-                                onClick={ () => seleccionarPresupuesto('esencial') }
+                                desc="Funciones básicas para comenzar a tener presencia online."
+                                isSelected={ formData.presupuesto === 'esencial' }
+                                onClick={ () => handleSeleccionarPresupuesto('esencial') }
                             />
 
                             <FormCard
                                 icon="🚀"
-                                title="Profesional"
-                                desc=" $800.000 - $1.500.000 CLP"
-                                onClick={ () => seleccionarPresupuesto('profesional') }
+                                title="Crecimiento"
+                                desc="Para negocios que necesiten escalar y automatizar procesos."
+                                isSelected={ formData.presupuesto === 'crecimiento' }
+                                onClick={ () => handleSeleccionarPresupuesto('crecimiento') }
                             />
 
                             <FormCard
-                                icon="💎"
-                                title="Premium"
-                                desc="Más de $1.500.000 CLP"
-                                onClick={ () => seleccionarPresupuesto('premium') }
+                                icon="🏢"
+                                title="Corporativo"
+                                desc="Sistemas complejos con integraciones de alto rendimiento."
+                                isSelected={ formData.presupuesto === 'corporativo' }
+                                onClick={ () => handleSeleccionarPresupuesto('corporativo') }
                             />
 
                             <FormCard
-                                icon="💬"
-                                title="A convenir"
-                                desc="Asesoria personalizada"
-                                onClick={ () => seleccionarPresupuesto('asesoria')}
+                                icon="🛠️"
+                                title="A Medida"
+                                desc="Un encargado se pondrá en contacto contigo para discutir los detalles."
+                                isSelected={ formData.presupuesto === 'a-medida' }
+                                onClick={ () => handleSeleccionarPresupuesto('a-medida')}
                             />
+                        </div>
+
+                        <div className="extra-info-bloque">
+                            <h4>¿Algo más que debamos saber? (Opcional)</h4>
+                            <textarea
+                                placeholder="Cuéntanos más sobre tu idea o requerimientos especiales..."
+                                onChange={(e) => handleDetalles('notas_adicionales', e.target.value)}
+                            />
+                        </div>
+                        
+                        
+                        <div className="btn-group">
+                            <button className="btn-secondary" onClick={ () => setStep(2)}>Atrás</button>
+                            <button className="btn-black" disabled={!formData.presupuesto} onClick={() => setStep(4) } >Continuar</button>
+                        </div>
+                    </div>
+                )}
+
+                { step === 4 && ( 
+                    <div className="resumen-container">
+                        <h3>Casi listos, ¿Cómo te contactamos?</h3>
+                        <p className="step-subtitle">Ingresa tus datos para enviarte la propuesta técnica.</p>
+
+                        <div className="contacto-form">
+                            <input 
+                                type="text"
+                                name="nombre"
+                                placeholder="Juan Pérez" 
+                                value={formData.contacto.nombre}
+                                onChange={handleContacto}
+                            />
+                            <input 
+                                type="email"
+                                name="email"
+                                placeholder="juan@example.com"
+                                value={formData.contacto.email}
+                                onChange={handleContacto}
+                            />
+
+                            <input 
+                                type="text" 
+                                name="telefono" 
+                                placeholder="+56 9 1234 5678" 
+                                value={formData.contacto.telefono}
+                                onChange={handleContacto} 
+                                maxLength={12}
+                            />
+                        </div>
+
+                        {!esContactoValido() && formData.contacto.telefono.length > 0 && ( 
+                            <p style={{ color: '#ff4d4d', fontSize: '12px', marginTop: '-10px' }}>
+                                * Revisa que el correo tenga un "@" y que el teléfono tenga 12 dígitos.
+                            </p>
+                        )}
+
+                        <div className="btn-group">
+                            <button className="btn-secondary" onClick={() => setStep(3)}>Atrás</button>
+
+                            <button 
+                                className="btn-black" 
+                                onClick={() => alert("Cotización enviada con éxito!")}
+                                disabled={!esContactoValido()} // El btn se activa solo si el contacto es válido
+                            >
+                                Enviar Solicitud
+                            </button>
                         </div>
                     </div>
                 )}
@@ -164,11 +270,12 @@ const Solicitud = () => {
     );
 };
 
-const FormCard = ( { icon, title, desc, onClick } ) => ( 
-    <div className="form-card" onClick={onClick}>
+const FormCard = ( { icon, title, desc, onClick, isSelected } ) => ( 
+    <div className={`form-card ${isSelected ? 'selected' : ''}`} onClick={onClick}>
         <div className="form-icon-box">{icon}</div>
         <div className="form-card-info">
             <h4>{title}</h4>
+            {desc && <p>{desc}</p>}
         </div>
     </div>
 )
