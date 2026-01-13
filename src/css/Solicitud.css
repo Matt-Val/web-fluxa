@@ -11,9 +11,10 @@
 .form-header h2 { 
     font-size: 28px;
     margin-bottom: 10px;
+    font-weight: 700;
 }
 
-/* Stepper, circulos y lineas */
+/* --- Stepper: Círculos y Líneas --- */
 .stepper { 
     display: flex;
     justify-content: center;
@@ -66,90 +67,113 @@
     background: #111;
 }
 
-.form-card:hover .form-icon-box { 
-    background: #111;
-    color: #fff;
-}
-/* Grid de las opciones */
+/* --- Grid de Opciones: Todas en una fila horizontal --- */
 .form-grid { 
     display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 20px;
-    max-width: 850px;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas para una sola fila */
+    gap: 15px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
 .form-card { 
     display: flex;
+    flex-direction: column; /* Icono arriba, texto abajo */
     align-items: center;
-    padding: 24px;
+    padding: 20px 15px;
     border: 1px solid #eee;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
     background: #fff;
-    text-align: left;
+    text-align: center;
 }
 
 .form-card:hover { 
     border-color: #111;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
-/* Contenedor del Icono */
+/* --- Contenedor del Icono y Efecto Hover --- */
 .form-icon-box { 
-    width: 52px;
-    height: 52px;
+    width: 50px;
+    height: 50px;
     background: #f7f7f7;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
-    margin-right: 18px;
+    font-size: 24px;
+    margin-bottom: 12px;
     transition: all 0.2s ease;
 }
 
-/* Efecto Hover - Al pasar el Mouse */
 .form-card:hover .form-icon-box { 
     background: #111;
     color: #fff;
 }
 
 .form-card-info h4 { 
-    margin: 0 0 4px 0;
-    font-size: 16px;
+    margin: 0;
+    font-size: 15px;
     font-weight: 600;
 }
 
-.form-card-info p { 
-    margin: 0;
+/* --- Estilos para los Componentes de Preguntas (Paso 2) --- */
+.preguntas-contenedor {
+    text-align: left;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.pregunta-bloque {
+    margin-bottom: 25px;
+}
+
+.opciones-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas para las funcionalidades */
+    gap: 10px;
+}
+
+.opciones-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.seleccion-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    cursor: pointer;
     font-size: 14px;
-    color: #666;
-    line-height: 1.4;
+    transition: 0.2s ease;
 }
 
-.step-subtitle { 
-    margin-bottom: 30px;
-    color: #666;
+.seleccion-item:hover {
+    border-color: #111;
+    background: #f9f9f9;
 }
 
-/* --- Contenedor de botones --- */
+/* --- Botones de Navegación --- */
 .btn-group {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Espacio entre botones */
+    gap: 15px;
     margin-top: 40px;
 }
 
-/* --- Botón Negro (Principal) --- */
 .btn-black {
     background-color: #111;
-    color: #fff;
+    color: white;
     border: 1px solid #111;
     padding: 12px 30px;
     border-radius: 8px;
-    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -160,53 +184,23 @@
     transform: translateY(-2px);
 }
 
-/* --- Botón Secundario (Bordeado) --- */
-.btn-secondary {
+.btn-secondary { 
     background: none;
     border: 1px solid #ddd;
     color: #111;
     padding: 12px 30px;
     border-radius: 8px;
-    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover { 
     background: #f9f9f9;
     border-color: #111;
 }
 
-/* --- Estilos para los componentes de preguntas --- */
-.preguntas-contenedor {
-    text-align: left; /* Alinea los títulos y labels a la izquierda */
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.pregunta-bloque {
+.step-subtitle { 
     margin-bottom: 30px;
-}
-
-.opciones-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Crea las dos columnas */
-    gap: 12px;
-}
-
-.seleccion-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.seleccion-item:hover {
-    border-color: #111;
-    background: #f9f9f9;
+    color: #666;
 }

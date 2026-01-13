@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Solicitud.css';
 
+// Importamos los componentes
 import { PreguntasEcommerce } from '../components/PreguntasEcommerce';
 import { PreguntasLanding } from '../components/PreguntasLanding';
 import { PreguntasBlog } from '../components/PreguntasBlogs';
@@ -11,7 +12,7 @@ const Solicitud = () => {
 
     const [step, setStep] = useState(1);
 
-    // Agregamos los detalles para guardar las respuestas del paso 2
+    // Inicializa los detalles en el estado
     const [formData, setFormData] = useState({
         tipo: '',
         detalles: {},
@@ -26,7 +27,7 @@ const Solicitud = () => {
         setStep(2);
     }
 
-    // Funcion para pasar los componentes (onChange ) y capturar los datos
+    // Fun para capturar las respuestas del paso 2
     const handleDetalles = (campo, valor) => { 
         setFormData(prev => ({ 
             ...prev,
@@ -43,9 +44,10 @@ const Solicitud = () => {
         <div className="fluxa-page form-view">
             <header className="form-header">
                 <h2>Solicitud de Proyecto Web</h2>
-                <p>Cuentanos sobre tu proyecto y te contactaremos con una propuesta personalizada.</p>
+                <p>Cuéntanos sobre tu proyecto y te contactaremos con una propuesta personalizada.</p>
             </header>
 
+            {/* Stepper Visual */}
             <div className="stepper">
                 <div className={`step ${step >= 1 ? 'active' : ''}`}><span>1</span><label>Tipo</label></div>
                     
@@ -66,8 +68,6 @@ const Solicitud = () => {
                 { step === 1 && (
                     <>
                         <h3>¿Qué necesitas?</h3>
-                        <p className="step-subtitle">Selecciona el tipo de proyecto que se ajuste a tus necesidades.</p>
-
                         <div className="form-grid">
                             <FormCard 
                                 icon="🛒"
@@ -101,29 +101,56 @@ const Solicitud = () => {
                     <div className="step-container">
                         {/* Renderizado condicional basado en el tipo seleccionado */}
 
-                        <h3>Paso 2: Alcance</h3>
-                        <p>Has seleccionado: {formData.tipo}</p>
 
-                        {formData.tipo === 'ecommerce' && ( 
-                            <PreguntasEcommerce onChange ={handleDetalles} valores={formData.detalles} />
-                        )}
+                        {formData.tipo === 'ecommerce' && <PreguntasEcommerce onChange = {handleDetalles} valores = {formData.detalles} /> }
 
-                        {formData.tipo === 'landing' && ( 
-                            <PreguntasLanding onChange = {handleDetalles} valores={formData.detalles} />
-                        )}
+                        {formData.tipo === 'landing' && <PreguntasLanding onChange = {handleDetalles} valores = {formData.detalles} /> }
 
-                        {formData.tipo === 'blog' && ( 
-                            <PreguntasBlog onChange = {handleDetalles} valores={formData.detalles} />
-                        )}
+                        {formData.tipo === 'blog' && <PreguntasBlog onChange = {handleDetalles} valores = {formData.detalles}/>}
 
-                        {formData.tipo === 'corporate' && ( 
-                            <PreguntasCorporate onChange = {handleDetalles} valores={formData.detalles} />
-                        )}
+                        {formData.tipo === 'corporate' && <PreguntasCorporate onChange = {handleDetalles} valores = {formData.detalles} /> }
 
                         <div className="btn-group">
                             <button className="btn-secondary" onClick={() => setStep(1)}>Atrás</button>
-
                             <button className="btn-black" onClick={() => setStep(3)}>Continuar</button>
+                        </div>
+                    </div>
+                )}
+
+                {step === 3 && ( 
+                    <div className="step-container">
+                        <h3>¿Cuál es tu presupuesto estimado?</h3>
+                        <p className="step-subtitle">Selecciona el rango que mejor se adapte a tu inversión</p>
+
+                        {/* Usamos el mismo grid para mantener la simetria */}
+                        <div className="form-grid">
+                            <FormCard
+                                icon="🌱"
+                                title="Esencial"
+                                desc="Desde los $400.000 CLP"
+                                onClick={ () => seleccionarPresupuesto('esencial') }
+                            />
+
+                            <FormCard
+                                icon="🚀"
+                                title="Profesional"
+                                desc=" $800.000 - $1.500.000 CLP"
+                                onClick={ () => seleccionarPresupuesto('profesional') }
+                            />
+
+                            <FormCard
+                                icon="💎"
+                                title="Premium"
+                                desc="Más de $1.500.000 CLP"
+                                onClick={ () => seleccionarPresupuesto('premium') }
+                            />
+
+                            <FormCard
+                                icon="💬"
+                                title="A convenir"
+                                desc="Asesoria personalizada"
+                                onClick={ () => seleccionarPresupuesto('asesoria')}
+                            />
                         </div>
                     </div>
                 )}
@@ -142,7 +169,6 @@ const FormCard = ( { icon, title, desc, onClick } ) => (
         <div className="form-icon-box">{icon}</div>
         <div className="form-card-info">
             <h4>{title}</h4>
-            <p>{desc}</p>
         </div>
     </div>
 )
