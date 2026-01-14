@@ -14,20 +14,14 @@ La aplicación guía al usuario a través de un formulario interactivo de 4 paso
 
 ## Tecnologías Utilizadas
 
-  -*Frontend*: React
-  -*Herramienta de Construcción*: Vite
-  -*Enrutamiento*: React Router DOM
-
-## Estructura del Proyecto
-src/
-├── components/          # Componentes de preguntas específicas por categoría
-├── css/                 # Archivos de estilos independientes
-├── pages/               # Páginas principales de la aplicación (Home, Solicitud)
-├── App.jsx              # Configuración de rutas principales
-└── main.jsx             # Punto de entrada de la aplicación
+  - *Frontend*: React
+  - *Herramienta de Construcción*: Vite
+  - *Enrutamiento*: React Router DOM
 
 ## Próximos Pasos
-  -*Integración con Backend*: Conectar el formulario con Supabase para el almacenamiento persistente.
-  -*Notificaciones*: Implementar API de WhatsApp para avisos.
-  -*Dashboard Administrativo*: Crear una vista para gestionar y visualizar solicitudes recibidas.
+
+  - *Integración con Backend*: Conectar el formulario con Supabase para el almacenamiento persistente.
+  - *Notificaciones*: Implementar API de WhatsApp para avisos.
+  - *Dashboard Administrativo*: Crear una vista para gestionar y visualizar solicitudes recibidas.
   
+
