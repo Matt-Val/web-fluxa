@@ -1,16 +1,33 @@
-# React + Vite
+# Fluxa - Sistema de Solicitud de Proyectos Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción 
 
-Currently, two official plugins are available:
+La aplicación guía al usuario a través de un formulario interactivo de 4 pasos para definir el alcance, presupuesto y contrato de su proyecto. Utiliza una arquitectura modular de componentes para manejar distintos flujos según el tipo de proyecto seleccionado (E-Commerce - Landing Page - Blog - Sistema Corporativo)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Características
 
-## React Compiler
+  - *Stepper Dinámico*: Intefaz que indica el usuario en tiempo real.
+  - *Cuestionarios Específicos*: Componentes dedicados para cada tipo de proyecto que recolectan detalles técnicos precisos.
+  - *Validación de Datos*: Sistema verifica la integridad de la información del contacto antes del envío.
+  - *Diseño Adaptativo*: Intefaz modesta con CSS.
+  - *Gestión de Estado*: Uso de UseState para centralizar la información de la solicitud.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tecnologías Utilizadas
 
-## Expanding the ESLint configuration
+  -*Frontend*: React
+  -*Herramienta de Construcción*: Vite
+  -*Enrutamiento*: React Router DOM
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Estructura del Proyecto
+src/
+├── components/          # Componentes de preguntas específicas por categoría
+├── css/                 # Archivos de estilos independientes
+├── pages/               # Páginas principales de la aplicación (Home, Solicitud)
+├── App.jsx              # Configuración de rutas principales
+└── main.jsx             # Punto de entrada de la aplicación
+
+## Próximos Pasos
+  -*Integración con Backend*: Conectar el formulario con Supabase para el almacenamiento persistente.
+  -*Notificaciones*: Implementar API de WhatsApp para avisos.
+  -*Dashboard Administrativo*: Crear una vista para gestionar y visualizar solicitudes recibidas.
+  
