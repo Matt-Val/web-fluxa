@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Solicitud.css';
+import emailjs from '@emailjs/browser';
 
 // Importamos los componentes
 import { PreguntasEcommerce } from '../components/PreguntasEcommerce';
@@ -59,6 +60,49 @@ const Solicitud = () => {
         const telefonoValido = telefono.length === 12;
 
         return noEstanVacios && emailValido && telefonoValido;
+    };
+
+    const enviarSolicitud = () => { 
+        // Formateamos los detalles del paso 2, para que sean legibles en el mail.
+        // Convertimos el objeto en una linea de texto
+
+        const detallesTexto  = Object.entries(formData.detalles)
+            .map(([key, value]) => { 
+                if (typeof value === 'boolean') return value ? `- ${key}` : null;
+                return `- ${key}: ${value}`;
+            })
+            .filter(item => item !== null)
+            .join('\n');
+
+
+        // Definimos los parametros que van a coincidir con la plantilla de emailjs
+        const templateParams = { 
+            nombre : formData.contacto.nombre,
+            email: formData.contacto.email,
+            telefono: formData.contacto.telefono,
+            tipo_proyecto: formData.tipo,
+            presupuesto: formData.presupuesto,
+            detalles: detallesTexto,
+            notas: formData.detalles.notas_adicionales || 'Ninguna'
+        };
+
+        // Enviamos el email usando emailjs
+        emailjs.send( 
+            import.meta.env.VITE_EMAILJS_SERVICE_ID,
+            import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+            templateParams,
+            import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+        )
+        .then ( (response) => { 
+            console.log('EXITO!' , response.status, response.text);
+            alert('Tu solicitud ha sido enviada con éxito. ¡Nos pondremos en contacto contigo pronto!');
+            navigate('/');
+        })
+        .catch( (err) => { 
+            console.error('ERROR...' , err);
+            alert('Hubo un error al enviar tu solicitud. Por favor, intenta nuevamente más tarde.');
+        });
     };
 
 
@@ -252,8 +296,8 @@ const Solicitud = () => {
 
                             <button 
                                 className="btn-black" 
-                                onClick={() => alert("Cotización enviada con éxito!")}
                                 disabled={!esContactoValido()} // El btn se activa solo si el contacto es válido
+                                onClick={enviarSolicitud}
                             >
                                 Enviar Solicitud
                             </button>

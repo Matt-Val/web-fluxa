@@ -1,4 +1,13 @@
 
+
+:root {
+    --text-primary: #2d3436;    /* Gris oscuro profundo, más suave que el negro */
+    --text-secondary: #636e72;  /* Gris medio para descripciones */
+    --accent-dark: #1e272e;     /* Color para botones y estados activos */
+    --border-soft: #eee;
+}
+
+
 .form-view { 
     text-align: center;
     padding-top: 40px;
@@ -9,11 +18,9 @@
 }
 
 .form-header h2 { 
-    font-size: 28px;
-    margin-bottom: 10px;
-    font-weight: 700;
+    color: var(--text-primary); 
+    font-weight: 800; /* Para compensar la suavidad del color con grosor */
 }
-
 /* --- Stepper: Círculos y Líneas --- */
 .stepper { 
     display: flex;
@@ -169,14 +176,7 @@
 }
 
 .btn-black {
-    background-color: #111;
-    color: white;
-    border: 1px solid #111;
-    padding: 12px 30px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    background-color: var(--accent-dark);
 }
 
 .btn-black:hover {
@@ -206,13 +206,8 @@
 }
 
 .form-card-info p {
-    margin: 0;
-    font-size: 13px;
-    color: #666;
-    line-height: 1.4;
-    margin-top: 4px; /* Espacio extra para la descripción del precio */
+    color: var(--text-secondary);
 }
-
 /* Estilo para el contenedor del resumen final */
 .resumen-container {
     padding: 40px;

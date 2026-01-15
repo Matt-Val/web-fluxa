@@ -25,3 +25,8 @@ La aplicación guía al usuario a través de un formulario interactivo de 4 paso
   - *Dashboard Administrativo*: Crear una vista para gestionar y visualizar solicitudes recibidas.
   
 
+
+## Instalaciones
+
+  - npm install
+  - npm install @emailjs/browser
