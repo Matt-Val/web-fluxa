@@ -97,7 +97,7 @@ const Solicitud = () => {
         .then ( (response) => { 
             console.log('EXITO!' , response.status, response.text);
             alert('Tu solicitud ha sido enviada con éxito. ¡Nos pondremos en contacto contigo pronto!');
-            navigate('/');
+            navigate('/gracias');
         })
         .catch( (err) => { 
             console.error('ERROR...' , err);
