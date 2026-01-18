@@ -18,15 +18,15 @@ La aplicación guía al usuario a través de un formulario interactivo de 4 paso
   - *Herramienta de Construcción*: Vite
   - *Enrutamiento*: React Router DOM
 
+## Instalaciones
+
+  - npm install
+  - npm install @emailjs/browser
+  - npm install @supabase/supabase-js
+
 ## Próximos Pasos
 
   - *Integración con Backend*: Conectar el formulario con Supabase para el almacenamiento persistente.
   - *Notificaciones*: Implementar API de WhatsApp para avisos.
   - *Dashboard Administrativo*: Crear una vista para gestionar y visualizar solicitudes recibidas.
   
-
-
-## Instalaciones
-
-  - npm install
-  - npm install @emailjs/browser

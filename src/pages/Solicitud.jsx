@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Solicitud.css';
+import { supabase } from '../lib/supabaseClient';
 import emailjs from '@emailjs/browser';
 
 // Importamos los componentes
@@ -11,17 +12,23 @@ import { PreguntasCorporate } from '../components/PreguntasCorporate';
 
 const Solicitud = () => { 
 
+    const navigate = useNavigate();
     const [step, setStep] = useState(1);
+    const [isSending, setIsSending] = useState(false); // Estado de carga
 
-    // Inicializa los detalles en el estado
-    const [formData, setFormData] = useState({
+    // Estado consolidado del formulario
+    const [formData, setFormData] = useState({ 
         tipo: '',
         detalles: {},
         presupuesto: '',
-        contacto: { nombre: '', email: '', telefono: ''}
+        contacto: { 
+            nombre: '',
+            email: '',
+            telefono: ''
+        }
     });
 
-    const navigate = useNavigate();
+    // --- Funciones de logica del estado === 
     
     const handleSeleccionarTipo = (tipo) => { 
         setFormData( { ...formData, tipo, detalles: {} } );
@@ -57,54 +64,68 @@ const Solicitud = () => {
         const emailValido = email.includes('@');
 
         // Regla 3: Que el telefono tenga exactamente 12 digitos 
-        const telefonoValido = telefono.length === 12;
+        const telefonoValido = telefono.length === 12; // Formato esperado: +56912345678
 
         return noEstanVacios && emailValido && telefonoValido;
     };
 
-    const enviarSolicitud = () => { 
-        // Formateamos los detalles del paso 2, para que sean legibles en el mail.
-        // Convertimos el objeto en una linea de texto
 
-        const detallesTexto  = Object.entries(formData.detalles)
-            .map(([key, value]) => { 
-                if (typeof value === 'boolean') return value ? `- ${key}` : null;
-                return `- ${key}: ${value}`;
-            })
-            .filter(item => item !== null)
-            .join('\n');
+    // --- Funcion de envio final (Supabase + EmailJS) ---
 
+    const enviarSolicitud = async () => { 
 
-        // Definimos los parametros que van a coincidir con la plantilla de emailjs
-        const templateParams = { 
-            nombre : formData.contacto.nombre,
-            email: formData.contacto.email,
-            telefono: formData.contacto.telefono,
-            tipo_proyecto: formData.tipo,
-            presupuesto: formData.presupuesto,
-            detalles: detallesTexto,
-            notas: formData.detalles.notas_adicionales || 'Ninguna'
-        };
+        try { 
+            // Preparamos los detalles para el correo.
+            const detallesTexto = Object.entries(formData.detalles)
+                .map(([key, value]) => { 
+                    if (typeof value === 'boolean') return value ? `- ${key}` : null;
+                    return `- ${key}: ${value}`;
+                })
+                .filter(item => item !== null)
+                .join('\n');
 
-        // Enviamos el email usando emailjs
-        emailjs.send( 
-            import.meta.env.VITE_EMAILJS_SERVICE_ID,
-            import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-            templateParams,
-            import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+            // Guardamos en Supabase
+            const { error: dbError } = await supabase
+                .from('solicitudes')
+                .insert([{
+                    nombre: formData.contacto.nombre,
+                    email: formData.contacto.email,
+                    tipo_proyecto: formData.tipo,
+                    presupuesto: formData.presupuesto,
+                    detalles: formData.detalles, // JSON completo
+                    notas: formData.detalles.notas_adicionales || ''
+                }]);
+            
+            if (dbError) throw dbError;
 
-        )
-        .then ( (response) => { 
-            console.log('EXITO!' , response.status, response.text);
-            alert('Tu solicitud ha sido enviada con éxito. ¡Nos pondremos en contacto contigo pronto!');
+            // Enviar notificacion por EmailJS -> a un Administrador
+            const templateParams = { 
+                nombre : formData.contacto.nombre,
+                email: formData.contacto.email,
+                telefono: formData.contacto.telefono,
+                tipo_proyecto: formData.tipo,
+                presupuesto: formData.presupuesto,
+                detalles: detallesTexto,
+                notas: formData.detalles.notas_adicionales || 'Ninguna'
+            };
+
+            await emailjs.send( 
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                templateParams,
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+            );
+
+            // Mensaje de Exito, redirige a la pag de gracias
             navigate('/gracias');
-        })
-        .catch( (err) => { 
-            console.error('ERROR...' , err);
-            alert('Hubo un error al enviar tu solicitud. Por favor, intenta nuevamente más tarde.');
-        });
-    };
+        } catch (error) { 
+            console.error("Error en el proceso de solicitud: ", error);
+            alert('Hubo un error al procesar tu solicitud. Por favor, intente nuevamente.');
+        } finally { 
+            setIsSending(false); // Liberamos el boton si hay error
+        }
 
+    }; 
 
     return (
         <div className="fluxa-page form-view">
@@ -299,7 +320,7 @@ const Solicitud = () => {
                                 disabled={!esContactoValido()} // El btn se activa solo si el contacto es válido
                                 onClick={enviarSolicitud}
                             >
-                                Enviar Solicitud
+                                {isSending ? 'Enviando...' : 'Enviar Solicitud'}
                             </button>
                         </div>
                     </div>
@@ -323,4 +344,6 @@ const FormCard = ( { icon, title, desc, onClick, isSelected } ) => (
         </div>
     </div>
 )
+
+
 export default Solicitud;
