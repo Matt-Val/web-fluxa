@@ -23,10 +23,9 @@ La aplicación guía al usuario a través de un formulario interactivo de 4 paso
   - npm install
   - npm install @emailjs/browser
   - npm install @supabase/supabase-js
+  - npm install lucide-react
 
 ## Próximos Pasos
 
-  - *Integración con Backend*: Conectar el formulario con Supabase para el almacenamiento persistente.
   - *Notificaciones*: Implementar API de WhatsApp para avisos.
   - *Dashboard Administrativo*: Crear una vista para gestionar y visualizar solicitudes recibidas.
-  

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/Solicitud.css';
 import { supabase } from '../lib/supabaseClient';
 import emailjs from '@emailjs/browser';
+import { ShoppingCart, FileText, BookOpen, Building2, Sprout, Rocket, Puzzle, Hammer } from 'lucide-react';
 
 // Importamos los componentes
 import { PreguntasEcommerce } from '../components/PreguntasEcommerce';
@@ -52,6 +53,27 @@ const Solicitud = () => {
             ...prev,
             contacto: { ...prev.contacto, [name]: value }
         }));
+    };
+
+    const esPaso2Valido = () => { 
+        const d = formData.detalles;
+        switch (formData.tipo) { 
+            case 'ecommerce': 
+                // Requiere: productos (radio), funcionalidades (min 1), diseno (radio)
+                return d.productos && (d.funcionalidades?.length > 0) && d.diseno;
+            case 'landing':
+                // Requiere: secciones (min 1), interacciones (min 1), diseno (radio)
+                return (d.secciones?.length > 0) && (d.interacciones?.length > 0) && d.diseno;
+            case 'blog':
+                // Requiere: autores (radio), funcionalidades (min 1), diseno (radio)
+                return d.autores && (d.funcionalidades?.length > 0) && d.diseno;
+            case 'corporate':
+                // Requiere: tipoSistema (radio), usuarios (radio), funcionalidades (min 1), diseno (radio)
+                return d.tipoSistema && d.usuarios && (d.funcionalidades?.length > 0) && d.diseno;
+
+            default:
+                return false;
+        }
     };
 
     const esContactoValido = () => { 
@@ -127,6 +149,7 @@ const Solicitud = () => {
 
     }; 
 
+
     return (
         <div className="fluxa-page form-view">
             <header className="form-header">
@@ -161,28 +184,28 @@ const Solicitud = () => {
 
                         <div className="form-grid">
                             <FormCard 
-                                icon="🛒"
+                                icon={<ShoppingCart size={32} />}
                                 title="E-commerce" 
                                 desc="Tienda online con carrito, pagos y gestión de productos." 
                                 isSelected={formData.tipo === 'ecommerce'}
                                 onClick={() => handleSeleccionarTipo('ecommerce')} 
                             />
                             <FormCard 
-                                icon="📄"
+                                icon={<FileText size={32} />}
                                 title="Landing Page" 
                                 desc="Página de aterrizaje para campañas o presentación de servicios." 
                                 isSelected={formData.tipo === 'landing'}
                                 onClick={() => handleSeleccionarTipo('landing')} 
                             />
                             <FormCard 
-                                icon="📖"
+                                icon={<BookOpen size={32} />}
                                 title="Blog" 
                                 desc="Sitio web con sistema de publicaciones y contenido editorial." 
                                 isSelected={formData.tipo === 'blog'}
                                 onClick={() => handleSeleccionarTipo('blog')} 
                             />
                             <FormCard 
-                                icon="🏢"
+                                icon={<Building2 size={32} />}
                                 title="Sistema Corporativo" 
                                 desc="Aplicación web empresarial con funcionalidades específicas para tu negocio." 
                                 isSelected={formData.tipo === 'corporate'}
@@ -215,8 +238,15 @@ const Solicitud = () => {
 
                         <div className="btn-group">
                             <button className="btn-secondary" onClick={() => setStep(1)}>Atrás</button>
-                            <button className="btn-black" onClick={() => setStep(3)}>Continuar</button>
+                            <button className="btn-black" disabled={!esPaso2Valido()} onClick={() => setStep(3)}>Continuar</button>
                         </div>
+
+                        {/* Nota de validación */}
+                        {!esPaso2Valido() && ( 
+                            <p style={{ color: '#ff4d4d', fontSize: '17px', marginTop: '10px' }}>
+                                 * Por favor, responde todas las secciones para habilitar el siguiente paso. *
+                            </p>
+                        )}
                     </div>
                 )}
 
@@ -227,7 +257,7 @@ const Solicitud = () => {
                         {/* Usamos el mismo grid para mantener la simetria */}
                         <div className="form-grid">
                             <FormCard
-                                icon="🌱"
+                                icon={<Sprout size={32} />}
                                 title="Esencial"
                                 desc="Funciones básicas para comenzar a tener presencia online."
                                 isSelected={ formData.presupuesto === 'esencial' }
@@ -235,7 +265,7 @@ const Solicitud = () => {
                             />
 
                             <FormCard
-                                icon="🚀"
+                                icon={<Rocket size={32} />}
                                 title="Crecimiento"
                                 desc="Para negocios que necesiten escalar y automatizar procesos."
                                 isSelected={ formData.presupuesto === 'crecimiento' }
@@ -243,7 +273,7 @@ const Solicitud = () => {
                             />
 
                             <FormCard
-                                icon="🏢"
+                                icon={<Puzzle size={32} />}
                                 title="Corporativo"
                                 desc="Sistemas complejos con integraciones de alto rendimiento."
                                 isSelected={ formData.presupuesto === 'corporativo' }
@@ -251,7 +281,7 @@ const Solicitud = () => {
                             />
 
                             <FormCard
-                                icon="🛠️"
+                                icon={<Hammer size={32} />}
                                 title="A Medida"
                                 desc="Un encargado se pondrá en contacto contigo para discutir los detalles."
                                 isSelected={ formData.presupuesto === 'a-medida' }
@@ -335,15 +365,16 @@ const Solicitud = () => {
     );
 };
 
-const FormCard = ( { icon, title, desc, onClick, isSelected } ) => ( 
+const FormCard = ({ icon, title, desc, onClick, isSelected }) => ( 
     <div className={`form-card ${isSelected ? 'selected' : ''}`} onClick={onClick}>
-        <div className="form-icon-box">{icon}</div>
+        <div className="form-icon-box">
+            {icon}
+        </div>
         <div className="form-card-info">
             <h4>{title}</h4>
             {desc && <p>{desc}</p>}
         </div>
     </div>
-)
-
+);
 
 export default Solicitud;

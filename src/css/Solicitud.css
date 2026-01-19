@@ -1,5 +1,3 @@
-
-
 :root {
     --text-primary: #2d3436;    /* Gris oscuro profundo, más suave que el negro */
     --text-secondary: #636e72;  /* Gris medio para descripciones */
@@ -103,23 +101,34 @@
 }
 
 /* --- Contenedor del Icono y Efecto Hover --- */
-.form-icon-box { 
-    width: 50px;
-    height: 50px;
-    background: #f7f7f7;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    margin-bottom: 12px;
-    transition: all 0.2s ease;
+
+
+/* La tarjeta completa se vuelve negra */
+.form-card.selected {
+    background-color: #111 !important;
+    border-color: #111;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-.form-card:hover .form-icon-box { 
-    background: #111;
-    color: #fff;
+/* El texto (título y descripción) se vuelve blanco */
+.form-card.selected .form-card-info h4,
+.form-card.selected .form-card-info p {
+    color: rgba(255, 255, 255, 0.8) !important;
 }
+
+/*  El icono de Lucide se vuelve blanco */
+.form-card.selected .form-icon-box svg {
+    stroke: #ffffff !important;
+    color: #ffffff !important; 
+    transition: all 0.3s ease;
+}
+
+/* Limpiamos el fondo del icon-box  */
+.form-card.selected .form-icon-box {
+    background: transparent !important;
+}
+
 
 .form-card-info h4 { 
     margin: 0;

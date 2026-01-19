@@ -91,6 +91,30 @@ export const PreguntasCorporate = ( { onChange, valores } ) => {
                     ))}
                 </div>
             </div>
+
+            {/* 3. Preguntas sobre Disenio */}
+            
+            <div className="pregunta-bloque">
+                <h4>¿Ya tienes un diseño definido?</h4>
+                <div className="opciones-columna">
+                    {[ 
+                        { id: 'ok', txt: 'Sí, tengo diseños completos' },
+                        { id: 'ref', txt: 'Tengo referencias' },
+                        { id: 'cero', txt: 'Necesito diseño desde cero' }
+                    ].map(d => ( 
+                        <label key={d.id} className="seleccion-item">
+                            <input 
+                                type="radio"
+                                name="diseno"
+                                value={d.txt}
+                                checked={valores.diseno === d.txt}
+                                onChange={handleChange} 
+                            />
+                            <span>{d.txt}</span>
+                        </label>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };
