@@ -1,7 +1,7 @@
 :root {
     --text-primary: #2d3436;    /* Gris oscuro profundo, más suave que el negro */
     --text-secondary: #636e72;  /* Gris medio para descripciones */
-    --accent-dark: #1e272e;     /* Color para botones y estados activos */
+    --accent-dark: #6c5ce7;     /* Color para botones y estados activos */
     --border-soft: #eee;
 }
 
@@ -105,9 +105,9 @@
 
 /* La tarjeta completa se vuelve negra */
 .form-card.selected {
-    background-color: #111 !important;
-    border-color: #111;
-    transform: translateY(-5px);
+    background-color: var(--accent-dark) !important;
+    border-color: var(--accent-dark);
+    transform: translateY(-10px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
