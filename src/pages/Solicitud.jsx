@@ -13,16 +13,16 @@ import { PreguntasCorporate } from '../components/PreguntasCorporate';
 
 const Solicitud = () => { 
 
-    const navigate = useNavigate();
-    const [step, setStep] = useState(1);
-    const [isSending, setIsSending] = useState(false); // Estado de carga
+    const navigate = useNavigate(); // Hook de navegacion
+    const [step, setStep] = useState(1); // Controla el paso actual
+    const [isSending, setIsSending] = useState(false); // Evita Multiples envios
 
     // Estado consolidado del formulario
     const [formData, setFormData] = useState({ 
-        tipo: '',
-        detalles: {},
-        presupuesto: '',
-        contacto: { 
+        tipo: '', // Tipo de proyecto seleccionado
+        detalles: {}, // Respuestas especificas segun el tipo
+        presupuesto: '', // Rango de presupuesto
+        contacto: {  // Datos de contacto
             nombre: '',
             email: '',
             telefono: ''
@@ -33,10 +33,12 @@ const Solicitud = () => {
     
     const handleSeleccionarTipo = (tipo) => { 
         setFormData( { ...formData, tipo, detalles: {} } );
+        // Guarda el tipo seleccionado y resetea los detalles para evitar datos de otro tipo
     };
 
     const handleSeleccionarPresupuesto = (rango) => { 
         setFormData({ ...formData, presupuesto: rango } );
+        // Selecciona el presupuesto
     };
 
     // Fun para capturar las respuestas del paso 2
@@ -44,6 +46,7 @@ const Solicitud = () => {
         setFormData(prev => ({ 
             ...prev,
             detalles: { ...prev.detalles, [campo]: valor }
+            // Actualiza solo el campo especifico en detalles
         }));
     };
 
@@ -53,6 +56,7 @@ const Solicitud = () => {
             ...prev,
             contacto: { ...prev.contacto, [name]: value }
         }));
+        // Actualiza solo el campo especifico en contacto
     };
 
     const esPaso2Valido = () => { 
@@ -74,28 +78,27 @@ const Solicitud = () => {
             default:
                 return false;
         }
+        // Cada tipo de proyecto tiene requisitos diferentes. el boton para continuar se habilita solo si se cumplen todos.
     };
 
     const esContactoValido = () => { 
         const { nombre, email, telefono } = formData.contacto;
 
-        // Regla 1: Que los campos esten llenos
         const noEstanVacios = nombre.trim() !== '' && email.trim() !== '' && telefono.trim() !== '';
 
-        // Regla 2: Que el Email contenga un @
         const emailValido = email.includes('@');
 
-        // Regla 3: Que el telefono tenga exactamente 12 digitos 
         const telefonoValido = telefono.length === 12; // Formato esperado: +56912345678
 
         return noEstanVacios && emailValido && telefonoValido;
+
+        // Valida los campos vacios, que el email contenga un @ y que el telefono tenga 12 digitos
     };
 
 
     // --- Funcion de envio final (Supabase + EmailJS) ---
 
     const enviarSolicitud = async () => { 
-
         try { 
             // Preparamos los detalles para el correo.
             const detallesTexto = Object.entries(formData.detalles)
@@ -140,6 +143,7 @@ const Solicitud = () => {
 
             // Mensaje de Exito, redirige a la pag de gracias
             navigate('/gracias');
+
         } catch (error) { 
             console.error("Error en el proceso de solicitud: ", error);
             alert('Hubo un error al procesar tu solicitud. Por favor, intente nuevamente.');
@@ -147,6 +151,13 @@ const Solicitud = () => {
             setIsSending(false); // Liberamos el boton si hay error
         }
 
+        /* 
+            Flujo: 
+                1. Convierte detalles en un texto legible.
+                2. Inserta registro en supabase.
+                3. Envía email de notificación.
+                4. Redirige a página de gracias.
+        */
     }; 
 
 
@@ -363,6 +374,14 @@ const Solicitud = () => {
             </button>
         </div>
     );
+    /* 
+        Flujo de pasos: 
+            1. Selecciona un tipo de proyecto -> habilita "Continuar".
+            2. Responde preguntas especificas -> valida respuestas para habilitar "Continuar".
+            3. Elige un rango de presupuesto -> puede agregar notas adicionales.
+            4. Ingresa los datos de contacto -> valida formato de email/telefono.
+            5. Envio: Guarda en BD + Envia email -> Redirige a página de gracias.
+    */
 };
 
 const FormCard = ({ icon, title, desc, onClick, isSelected }) => ( 
@@ -375,6 +394,8 @@ const FormCard = ({ icon, title, desc, onClick, isSelected }) => (
             {desc && <p>{desc}</p>}
         </div>
     </div>
+
+    // Componente de icono, aplica clase selected si corresponde, funcion onClick al contenedor
 );
 
 export default Solicitud;
