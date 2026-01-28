@@ -3,11 +3,10 @@ import Home from './pages/Home.jsx'
 import Solicitud from './pages/Solicitud.jsx'
 import Gracias from './pages/Gracias.jsx'
 
-
+import './css/Home.css'
 import './css/App.css'
 import './css/Solicitud.css'
 import './css/Gracias.css'
-
 
 function App() {
   return (
@@ -19,6 +18,7 @@ function App() {
           <Route path="/solicitud" element= { <Solicitud /> } />
 
           <Route path="/gracias" element = { <Gracias /> } />
+
         </Routes>
     </>
   )
