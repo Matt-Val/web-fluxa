@@ -24,6 +24,7 @@ La aplicación guía al usuario a través de un formulario interactivo de 4 paso
   - npm install @emailjs/browser
   - npm install @supabase/supabase-js
   - npm install lucide-react
+  - npm install react-phone-input-2
 
 ## Próximos Pasos
 

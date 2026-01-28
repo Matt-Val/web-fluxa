@@ -4,6 +4,8 @@ import '../css/Solicitud.css';
 import { supabase } from '../lib/supabaseClient';
 import emailjs from '@emailjs/browser';
 import { ShoppingCart, FileText, BookOpen, Building2, Sprout, Rocket, Puzzle, Hammer } from 'lucide-react';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 // Importamos los componentes
 import { PreguntasEcommerce } from '../components/PreguntasEcommerce';
@@ -59,6 +61,14 @@ const Solicitud = () => {
         // Actualiza solo el campo especifico en contacto
     };
 
+    const handleTelefono = (value) => { 
+        setFormData(prev => ({ 
+            ...prev,
+            contacto: { ...prev.contacto, telefono: value }
+        }));
+    };
+
+
     const esPaso2Valido = () => { 
         const d = formData.detalles;
         switch (formData.tipo) { 
@@ -88,7 +98,7 @@ const Solicitud = () => {
 
         const emailValido = email.includes('@');
 
-        const telefonoValido = telefono.length === 12; // Formato esperado: +56912345678
+        const telefonoValido = telefono.length >=10 && telefono.length <=15; 
 
         return noEstanVacios && emailValido && telefonoValido;
 
@@ -150,6 +160,7 @@ const Solicitud = () => {
         } finally { 
             setIsSending(false); // Liberamos el boton si hay error
         }
+
 
         /* 
             Flujo: 
@@ -337,19 +348,23 @@ const Solicitud = () => {
                                 onChange={handleContacto}
                             />
 
-                            <input 
-                                type="text" 
-                                name="telefono" 
-                                placeholder="+56 9 1234 5678" 
+                            <PhoneInput
+                                country={'cl'} // Pais de default (Chile)
                                 value={formData.contacto.telefono}
-                                onChange={handleContacto} 
-                                maxLength={12}
+                                onChange={handleTelefono}
+                                inputProps={{
+                                    name: 'telefono',
+                                    required: true,
+                                }}
+                                containerClass="phone-container"
+                                inputClass="phone-input-field"
+                                localization={{cl: 'Chile', ar: 'Argentina', es: 'España', us: 'USA'}}
                             />
                         </div>
 
                         {!esContactoValido() && formData.contacto.telefono.length > 0 && ( 
                             <p style={{ color: '#ff4d4d', fontSize: '12px', marginTop: '-10px' }}>
-                                * Revisa que el correo tenga un "@" y que el teléfono tenga 12 dígitos.
+                                * Verifica que el correo sea válido y el teléfono tenga el formato correcto. *
                             </p>
                         )}
 

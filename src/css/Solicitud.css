@@ -298,3 +298,26 @@
     cursor: not-allowed;
     transform: none !important; /* Evita que se mueva al hacer hover */
 }
+
+
+.telefono-flex {
+    display: flex;
+    gap: 10px;
+}
+
+.prefijo-select {
+    width: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+}
+
+/* Si usas la librería PhoneInput, esto ajusta su estilo al de Fluxa */
+.phone-input-field {
+    width: 100% !important;
+    height: 45px !important;
+    border-radius: 8px !important;
+    border: 1px solid #ddd !important;
+}
